@@ -54,14 +54,17 @@ public class ClassifyNameService {
         //6. Compute confidence
         boolean is_confident = responseBody.getProbability() >= 0.7 && responseBody.getCount() >= 100;
 
-        //7. Build response
+        // 7. Build response
         ClassifyNameResponse classifyNameResponse = ClassifyNameResponse.builder()
-                .name(responseBody.getName())
-                .gender(responseBody.getGender())
-                .probability(responseBody.getProbability())
-                .sample_size(responseBody.getCount())
-                .is_confident(is_confident)
-                .processed_at(OffsetDateTime.now(ZoneOffset.UTC))
+                .status("success")
+                .data(ClassifyNameResponse.Data.builder()
+                        .name(responseBody.getName())
+                        .gender(responseBody.getGender())
+                        .probability(responseBody.getProbability())
+                        .sample_size(responseBody.getCount())
+                        .is_confident(is_confident)
+                        .processed_at(OffsetDateTime.now(ZoneOffset.UTC).toString())
+                        .build())
                 .build();
 
         return ResponseEntity.ok(classifyNameResponse);
