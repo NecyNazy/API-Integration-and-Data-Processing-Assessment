@@ -35,10 +35,10 @@ public class ClassifyNameService {
         );
         System.out.println(response);
 
-        //3. get response from genderize api
+        //4. retrieve response from genderize api
         GenderizeResponse responseBody = response.getBody();
 
-        //4.Handle error response
+        //5.Handle error response
         if (responseBody == null) {
             throw new ApiException("error", "Invalid response from Genderize API", 502);
         }
@@ -51,10 +51,10 @@ public class ClassifyNameService {
             throw new ApiException("error", "No Prediction available for the provided name");
         }
 
-        //5. Compute confidence
+        //6. Compute confidence
         boolean is_confident = responseBody.getProbability() >= 0.7 && responseBody.getCount() >= 100;
 
-        //6. Build response
+        //7. Build response
         ClassifyNameResponse classifyNameResponse = ClassifyNameResponse.builder()
                 .name(responseBody.getName())
                 .gender(responseBody.getGender())
