@@ -1,6 +1,5 @@
 package com.backend_torch.API.integration.and.Data.Processing.controller;
 
-import com.backend_torch.API.integration.and.Data.Processing.dtos.ClassifyNameRequest;
 import com.backend_torch.API.integration.and.Data.Processing.dtos.ClassifyNameResponse;
 import com.backend_torch.API.integration.and.Data.Processing.service.ClassifyNameService;
 import jakarta.validation.Valid;

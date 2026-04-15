@@ -1,7 +1,6 @@
 package com.backend_torch.API.integration.and.Data.Processing.service;
 
 import com.backend_torch.API.integration.and.Data.Processing.dtos.AppProperties;
-import com.backend_torch.API.integration.and.Data.Processing.dtos.ClassifyNameRequest;
 import com.backend_torch.API.integration.and.Data.Processing.dtos.ClassifyNameResponse;
 import com.backend_torch.API.integration.and.Data.Processing.dtos.GenderizeResponse;
 import com.backend_torch.API.integration.and.Data.Processing.exceptions.ApiException;
