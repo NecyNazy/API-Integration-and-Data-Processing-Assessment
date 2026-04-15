@@ -18,8 +18,8 @@ public class GlobalApiExceptionHandler {
 
     private ResponseEntity<Map<String, Object>> build(String status, String message, int httpStatus) {
         return ResponseEntity.status(httpStatus).body(Map.of(
-                "responseStatus", status,
-                "responseMessage", message
+                "Status:", status,
+                "Message:", message
         ));
     }
 
