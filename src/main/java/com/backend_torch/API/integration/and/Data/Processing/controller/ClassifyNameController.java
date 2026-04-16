@@ -13,7 +13,7 @@ public class ClassifyNameController {
     private final ClassifyNameService classifyNameService;
 
     @GetMapping("/classify")
-    public ResponseEntity<ClassifyNameResponse> classifyName(@RequestParam String name) {
+    public ResponseEntity<ClassifyNameResponse> classifyName(@RequestParam(required = false) String name) {
          return classifyNameService.classifyName(name) ;
     }
 }

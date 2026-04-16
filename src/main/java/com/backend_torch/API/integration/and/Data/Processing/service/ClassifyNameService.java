@@ -20,8 +20,24 @@ public class ClassifyNameService {
 
     public ResponseEntity<ClassifyNameResponse> classifyName(String name) {
         //1. Validate Input
-        if (name == null || name.trim().isEmpty()|| !name.matches("^[a-zA-Z]+$") ) {
-            throw new ApiException("error", "Name is required and must be a valid string without any special characters", 422);
+        if (name == null || name.trim().isEmpty() ) {
+            throw new ApiException("error", "Name is required", 422);
+        }
+        boolean isNonsense = name.trim().length() < 2 || name.matches(".*\\d.*");
+        if (isNonsense) {
+            return ResponseEntity.ok(
+                    ClassifyNameResponse.builder()
+                            .status("success")
+                            .data(ClassifyNameResponse.Data.builder()
+                                    .name(name)
+                                    .gender(null)
+                                    .probability(0.0)
+                                    .sample_size(0L)
+                                    .is_confident(false)
+                                    .processed_at(OffsetDateTime.now(ZoneOffset.UTC).toString())
+                                    .build())
+                            .build()
+            );
         }
 
         // 2. Build URL for GET request (Genderize expects query param)

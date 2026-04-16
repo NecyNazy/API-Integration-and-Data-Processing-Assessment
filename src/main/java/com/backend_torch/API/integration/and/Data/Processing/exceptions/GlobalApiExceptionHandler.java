@@ -7,10 +7,12 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
@@ -18,8 +20,8 @@ public class GlobalApiExceptionHandler {
 
     private ResponseEntity<Map<String, Object>> build(String status, String message, int httpStatus) {
         return ResponseEntity.status(httpStatus).body(Map.of(
-                "Status:", status,
-                "Message:", message
+                "Status", status,
+                "Message", message
         ));
     }
 
@@ -64,6 +66,18 @@ public class GlobalApiExceptionHandler {
     public ResponseEntity<?> handleNoResource(NoResourceFoundException ex, HttpServletRequest req) {
         return build("404", "Endpoint not found: " + req.getRequestURI(), HttpStatus.NOT_FOUND.value());
     }
+    //Handle missing query params e.g /api/classify (no ?name)
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<Map<String, Object>> handleMissingParams(
+            MissingServletRequestParameterException ex) {
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("Status", "error");
+        response.put("Message", ex.getParameterName() + " is required and must be provided");
+
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(response);
+    }
+
 
     // Catch-all (always keep this last)
     @ExceptionHandler(Exception.class)
